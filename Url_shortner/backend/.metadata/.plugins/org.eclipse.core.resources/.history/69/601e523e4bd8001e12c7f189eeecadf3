@@ -1,0 +1,21 @@
+package com.example.demo.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.dao.UrlDao;
+import com.example.demo.dto.ResponseStructure;
+import com.example.demo.dto.Url;
+
+@Service
+public class UrlService {
+
+	@Autowired
+	private UrlDao urlDao;
+	
+	public Url saveUrl(Url url) {
+		ResponseStructure<Url> structure=new ResponseStructure<>();
+		structure.setData(urlDao.saveUrl(url));
+		structure.setMessage("Url saved successfully.......");
+	}
+}

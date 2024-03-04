@@ -1,0 +1,35 @@
+package com.example.demo.service;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.dao.UserDao;
+import com.example.demo.dto.ResponseStructure;
+import com.example.demo.dto.User;
+
+@Service
+public class UserService {
+ 
+	@Autowired
+	private UserDao userDao;
+	
+	public ResponseStructure<User> saveUser(User user) {
+		ResponseStructure<User> structure=new ResponseStructure<>();
+		structure.setData(userDao.saveUser(user));
+		structure.setMessage("User saved successfully.......");
+		structure.setStatuscode(HttpStatus.CREATED.value());
+		return structure;
+	}
+	
+	public ResponseStructure<User> updateUser(User user){
+		ResponseStructure<User> structure=new ResponseStructure<>();
+		Optional<User> recUser=userDao.findById(user.getId());
+	}
+}
+
+
+
+

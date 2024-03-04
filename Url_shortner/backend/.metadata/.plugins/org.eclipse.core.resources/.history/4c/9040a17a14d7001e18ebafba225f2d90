@@ -1,0 +1,7 @@
+package com.example.demo.dto;
+
+public class ReponseStructure<T> {
+	private String message; 
+    private T data;
+    private int statuscode;
+}

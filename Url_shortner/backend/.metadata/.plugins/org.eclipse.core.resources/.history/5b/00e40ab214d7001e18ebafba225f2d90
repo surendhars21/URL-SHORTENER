@@ -1,0 +1,23 @@
+package com.example.demo.dao;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Repository;
+
+import com.example.demo.Repository.UserRepository;
+import com.example.demo.dto.ReponseStructure;
+import com.example.demo.dto.User;
+
+@Repository
+public class UserDao {
+
+	@Autowired
+	private UserRepository repository;
+	
+	public User saveUser(User user) {
+		ReponseStructure<User> structure=new ReponseStructure<>();
+		structure.setMessage("User saved successfully...");
+		structure.setData(repository.save(user));
+		structure.setStatuscode(HttpStatus.CREATED.value());
+	}
+}

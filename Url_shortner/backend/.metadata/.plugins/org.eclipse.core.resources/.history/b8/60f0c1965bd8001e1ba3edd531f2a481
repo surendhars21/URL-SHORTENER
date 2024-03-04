@@ -1,0 +1,50 @@
+package com.example.demo.service;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.dao.UrlDao;
+import com.example.demo.dao.UserDao;
+import com.example.demo.dto.ResponseStructure;
+import com.example.demo.dto.Url;
+import com.example.demo.dto.User;
+
+@Service
+public class UrlService {
+
+	@Autowired
+	private UrlDao urlDao;
+	@Autowired
+	private UserDao userDao;
+	
+	public ResponseStructure<Url> saveUrl(Url url,int user_id) {
+		ResponseStructure<Url> structure=new ResponseStructure<>();
+		Optional<User> recUser=userDao.findById(user_id);
+		if(recUser.isPresent()) {
+			User userdb=recUser.get();
+			userdb.getUrl().add(url);
+			url.setUser(userdb);
+			structure.setData(urlDao.saveUrl(url));
+			structure.setMessage("Url saved successfullyy......");
+			structure.setStatuscode(HttpStatus.CREATED.value());
+			return structure;
+		}
+		structure.setMessage("Invalid user id......");
+		structure.setStatuscode(HttpStatus.NOT_FOUND.value());
+		return structure;
+	}
+	
+	public ResponseStructure<Url> findById(int id){
+		ResponseStructure<Url> structure=new ResponseStructure<>();
+		Optional<Url> recUrl=urlDao.findById(id);
+		
+	}
+}
+
+
+
+
+
